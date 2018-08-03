@@ -3,10 +3,12 @@
  */
 import {StyleSheet} from 'react-native';
 
+const {themeColor, colorRed} = global.phfz.color;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#041934',
+    backgroundColor: themeColor,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
@@ -22,6 +24,13 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 5,
     marginBottom: 30,
+  },
+  errMsg: {
+    width: '80%',
+    height: 30,
+    lineHeight: 30,
+    color: colorRed,
+    fontSize: 12,
   },
   footer: {
     justifyContent: 'center',

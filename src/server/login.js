@@ -6,7 +6,8 @@ import reqServer from '../utils/axios';
 export default function reqLogin(data) {
   return reqServer({
     url: 'login.do',
-    type: 'get',
+    method: 'get',
     data: data
   });
+
 }

@@ -3,12 +3,14 @@
  */
 import {StyleSheet} from 'react-native';
 
+const {colorBlue} = global.phfz.color;
+
 const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 40,
     lineHeight: 40,
-    backgroundColor: '#2699f2',
+    backgroundColor: colorBlue,
     textAlign: 'center',
     fontSize: 18,
     color: '#fff',

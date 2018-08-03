@@ -7,9 +7,11 @@ import React, {Component} from 'react';
 import {StackNavigator} from 'react-navigation';
 
 import Login from './view/login/Login';
+import Index from './view/index/Index';
 
 const App = StackNavigator({
-  Login: {screen: Login}
+  Login: {screen: Login},
+  Index: {screen: Index},
 });
 
 export default App;

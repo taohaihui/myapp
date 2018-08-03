@@ -10,6 +10,8 @@ import Button from '../../component/button/Button';
 
 import reqLogin from '../../server/login';
 
+const {themeColor} = global.phfz.color;
+
 export default class Login extends Component {
   static navigationOptions = {
     header: null
@@ -19,6 +21,7 @@ export default class Login extends Component {
     username: '',
     pwd: '',
     showFooter: true,
+    msg: '',
   };
 
   componentDidMount() {
@@ -32,7 +35,10 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar animated={true} barStyle="light-content" backgroundColor="#041934"/>
+        <StatusBar
+          animated={true}
+          barStyle="light-content"
+          backgroundColor={themeColor}/>
         <View style={styles.loginBox}>
           <Image
             style={styles.logImage}
@@ -45,12 +51,13 @@ export default class Login extends Component {
             value={this.state.username}
             onChangeText={this.handleChange.bind(this, 'username')}/>
           <Input
-            style={{width: '80%', marginBottom: 30}}
+            style={{width: '80%'}}
             placeholder="请输入密码"
             keyboardType="email-address"
             type="password"
             value={this.state.pwd}
             onChangeText={this.handleChange.bind(this, 'pwd')}/>
+          <Text style={styles.errMsg}>{this.state.msg}</Text>
           <Button
             style={{width: '80%', marginBottom: 20}}
             text="登录"
@@ -86,9 +93,10 @@ export default class Login extends Component {
     Keyboard.removeAllListeners();
   }
 
-  handleChange(key, e) {
+  handleChange(key, value) {
     this.setState({
-      [key]: e
+      [key]: value,
+      msg: '',
     });
   }
 
@@ -99,7 +107,15 @@ export default class Login extends Component {
     };
 
     reqLogin(data).then(res => {
-      Alert.alert(res);
+      console.log(res);
+      res.success = true;
+      if (res.success) {
+        this.props.navigation.navigate('Index');
+      } else {
+        this.setState({
+          msg: res.msg
+        });
+      }
     });
   }
 }
