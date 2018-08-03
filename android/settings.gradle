@@ -1,0 +1,3 @@
+rootProject.name = 'phfz'
+
+include ':app'
