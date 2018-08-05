@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>echart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <style>
+    html, body, #eChart {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #eChart {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="eChart">测试</div>
+
+<script src="./echarts.min.js"></script>
+<script>
+  window.onload = function () {
+    var echartDom = document.getElementById('eChart');
+    var myChart = echarts.init(echartDom);
+
+    myChart.showLoading();
+
+    window.document.addEventListener('message', function (e) {
+      var data = JSON.parse(e.data);
+      var action = data.action;
+      var options = data.options;
+
+      //更新图表数据
+      if (action === 'newData') {
+        myChart.hideLoading();
+        myChart.setOption(options);
+      }
+
+      //更新dom尺寸
+      if (action === 'initDom') {
+        options.width && (echartDom.style.width = options.width + 'px');
+        options.height && (echartDom.style.height = options.height + 'px');
+        myChart.resize();
+      }
+
+      //给图表添加事件
+      if (action === 'addEChartListener') {
+        options.forEach(item => {
+          myChart.on(item.name, function (params) {
+            let data = {};
+            item.value.forEach(key => {
+              data[key] = params[key];
+            });
+            window.postMessage(JSON.stringify(data));
+          });
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
